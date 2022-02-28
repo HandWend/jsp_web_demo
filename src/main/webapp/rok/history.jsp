@@ -13,9 +13,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 </head>
 <body>
+
 <div class="container">
 <p class="bg-primary">지식광장(국사무쌍)</p>
 <div>- 검색창에 질문 입력시 자동검색 됩니다. </div>
+
 <form method="post" action="historyAct.jsp" onsubmit="return frmChk()">
   <div class="form-group">
     <label for="qs">문제 입력</label>
@@ -27,6 +29,10 @@
   </div>
   <button type="submit" class="btn btn-default">문제 추가하기</button>
 </form>
+<div>
+<input type="text" class="form-control" name="q" id="q" placeholder="질문을 입력해주세요." onkeyup="aaa(this)">
+</div>
+<div id ="res">검색된 데이터가 없습니다. 질문을 입력해주세요.</div>
 </div>
 
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
@@ -38,6 +44,10 @@ function frmChk()
 {
 	alert("문제제출 똑바로 안하면 ...");	
 	return true;
+}
+
+function aaa(str) {
+	console.log(str.value);
 }
 </script>
 

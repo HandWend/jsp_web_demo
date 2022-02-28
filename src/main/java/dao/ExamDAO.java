@@ -56,36 +56,37 @@ public class ExamDAO extends DbUtil {
 	 */
 	
 	// 기존: List<ExamVO>
-	public ExamVO read(ExamVO vo) {
+	public List<ExamVO> read(String q) {
 		// 코드 작성
 
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT * FROM exam WHERE num = ? ");
+		sql.append(" SELECT * FROM quiz WHERE qs LIKE ? ");
 		
 		// return 값으로 쓸 것이기 때문에 전역변수로 사용.
-		ExamVO examVo = null;
+		
 		// finally
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		ExamVO examVo = null;
+		List<ExamVO> list = new ArrayList<ExamVO>();
+		
 		try {
 			// 연결
 			conn = dbConn();
 			// PreparedStatement (sql문 + 실행)
 			stmt = conn.prepareStatement(sql.toString());
 			// ResultSet 객체생성
-			stmt.setInt(1, vo.getNum());
+			stmt.setString(1, "%"+q+"%");
 			rs = stmt.executeQuery();
 			
-			if (rs.next()) {
-//				examVo = new ExamVO(
-//						rs.getInt("num"),
-//						rs.getString("varcharTest"),
-//						rs.getString("charTest"),
-//						rs.getDouble("doubleTest"),
-//						rs.getDate("dateTest"),
-//						rs.getTimestamp("dateTimeTest")
-//				);
+			while (rs.next()) {
+				examVo = new ExamVO(
+						rs.getInt("num"),
+						rs.getString("qs"),
+						rs.getString("an")
+				);
+				list.add(examVo); 
 			}	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -94,8 +95,8 @@ public class ExamDAO extends DbUtil {
 			dbClose(conn, stmt, null);
 		}	
 		// 닫기
-		// 코드작성 끝
-		return examVo;
+		// 코드작성 끝 
+		return list;
 	}
 
 	/**
@@ -105,7 +106,7 @@ public class ExamDAO extends DbUtil {
 	 * return : 없음. 
 	 */
 	
-	}
+	} 
 
 
 

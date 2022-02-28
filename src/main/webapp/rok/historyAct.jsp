@@ -15,6 +15,8 @@ request.setCharacterEncoding("UTF-8");
 	String an = request.getParameter("an");
 	ExamVO vo = new ExamVO(0, qs, an );
 	new ExamDAO().create(vo);
+	// 페이지 이동
+	response.sendRedirect("history.jsp");
 %>
 </body>
 </html>
