@@ -47,7 +47,28 @@ function frmChk()
 }
 
 function aaa(str) {
-	console.log(str.value);
+	$.ajax({
+	    url     : './historyAjaxAct.jsp'
+	  , type    : 'post'     // post
+	  , dataType : 'html'
+	  , async   : false     // 동기식으로 실행 (생략하면 비동기)
+	  , data : {
+	         'q' : str.value       
+	  }
+	
+	  // data : $("#dataForm").serialize()      // 이렇게 폼을 통째로 넘길수도 있다
+	}).done(function (response){
+	    console.log(response);
+	    
+	    document.getElementById('res').innerHTML = response;
+	  
+	}).fail(function (response){
+	    alert('서버 오류')
+	    return false;
+	}); 
+
+
+
 }
 </script>
 
